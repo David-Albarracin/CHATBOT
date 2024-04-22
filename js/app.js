@@ -14,11 +14,17 @@ var country ;
 var device_id ;
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('http://ip-api.com/json/?fields=61439')
+    fetch('https://api.ipify.org?format=json')
     .then(res => res.json())
     .then(res => {
-        ip = res.query
-        country = res.country
+        ip = res.ip
+        fetch(`https://ipapi.co/${ip}/json/`)
+        .then(res => res.json())
+        .then(res => {
+            country = res.country_name
+        });
+        ip = res.ip
+        country = res.country || 'Colombia'
     });
     device_id =  Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
     messageContainer.innerHTML = `
